@@ -1,0 +1,12 @@
+/* UCAB Custom UI Layout Helpers */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.border-dashed {
+  border-style: dashed !important;
+}

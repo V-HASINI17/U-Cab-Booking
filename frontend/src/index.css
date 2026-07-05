@@ -1,0 +1,196 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+:root {
+  --primary-color: #F4B400;
+  --bg-color: #FFF8E1;
+  --dark-color: #212529;
+  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+  --border-radius-sm: 8px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 24px;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--dark-color);
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* Card Overrides */
+.ucab-card {
+  background: #ffffff;
+  border: 1px solid rgba(244, 180, 0, 0.15);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ucab-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Form Styling */
+.form-control, .form-select {
+  border-radius: var(--border-radius-sm);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 12px 16px;
+  transition: border-color 0.2s ease;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(244, 180, 0, 0.2);
+}
+
+/* Button Styling */
+.btn-primary-ucab {
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--dark-color);
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary-ucab:hover {
+  background-color: #e0a500;
+  color: var(--dark-color);
+  transform: translateY(-1px);
+}
+
+.btn-secondary-ucab {
+  background-color: var(--dark-color);
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary-ucab:hover {
+  background-color: #111416;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.btn-outline-ucab {
+  border: 2px solid var(--primary-color);
+  background-color: transparent;
+  color: var(--dark-color);
+  font-weight: 600;
+  padding: 10px 24px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-ucab:hover {
+  background-color: var(--primary-color);
+  color: var(--dark-color);
+}
+
+/* Navbar */
+.navbar-ucab {
+  background-color: var(--primary-color) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.navbar-ucab .navbar-brand {
+  font-weight: 800;
+  color: var(--dark-color) !important;
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.navbar-ucab .nav-link {
+  color: var(--dark-color) !important;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 16px !important;
+  transition: color 0.2s ease;
+}
+
+.navbar-ucab .nav-link:hover, .navbar-ucab .nav-link.active {
+  color: #000000 !important;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 3px;
+}
+
+/* Table overrides */
+.table-ucab {
+  background: white;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+}
+
+.table-ucab th {
+  background-color: #FFF3CD;
+  color: #533f03;
+  font-weight: 600;
+  border-bottom: 2px solid #FFE082;
+  padding: 16px;
+}
+
+.table-ucab td {
+  padding: 16px;
+  vertical-align: middle;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-pending { background-color: #FFF3CD; color: #856404; }
+.status-confirmed { background-color: #D4EDDA; color: #155724; }
+.status-arriving { background-color: #CCE5FF; color: #004085; }
+.status-inprogress { background-color: #E2E3E5; color: #383D41; }
+.status-completed { background-color: #D4EDDA; color: #155724; }
+.status-cancelled { background-color: #F8D7DA; color: #721C24; }
+
+.payment-unpaid { background-color: #FFF3CD; color: #856404; }
+.payment-paid { background-color: #D4EDDA; color: #155724; }
+
+/* Custom illustrations or elements */
+.cab-hero-img {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 15px 30px rgba(244, 180, 0, 0.3));
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #receipt-print-area, #receipt-print-area * {
+    visibility: visible;
+  }
+  #receipt-print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border: none !important;
+    padding: 0 !important;
+  }
+}

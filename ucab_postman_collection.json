@@ -1,0 +1,378 @@
+{
+  "info": {
+    "_postman_id": "8b5f3a09-9fcf-49b8-b80c-03ebf81a7d65",
+    "name": "UCAB API Collection",
+    "description": "API collection for UCAB Cab Booking System, covering authentication, driver registration, cab fleet management, bookings, fare estimation, simulated checkouts, and support tickets.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User & Driver Authentication",
+      "item": [
+        {
+          "name": "User Registration (Passenger)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Passenger\",\n  \"email\": \"john@passenger.com\",\n  \"password\": \"password123\",\n  \"mobile\": \"+15551234567\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/users/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "users", "register"]
+            }
+          }
+        },
+        {
+          "name": "Driver Registration (Partner)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Dave Driver\",\n  \"email\": \"dave@driver.com\",\n  \"password\": \"password123\",\n  \"mobile\": \"+15559876543\",\n  \"role\": \"driver\",\n  \"driverDetails\": {\n    \"licenseNumber\": \"DL-CA992381\",\n    \"vehicleModel\": \"Toyota Prius Hybrid\",\n    \"vehicleNumber\": \"CAB-TX-9876\",\n    \"vehicleType\": \"Sedan\",\n    \"experienceYears\": 5\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/users/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "users", "register"]
+            }
+          }
+        },
+        {
+          "name": "User / Driver Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@passenger.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/users/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "users", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get User Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/users/me",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "users", "me"]
+            }
+          }
+        },
+        {
+          "name": "Update Driver Location Telemetry",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{driver_jwt_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"city\": \"Boston\",\n  \"lat\": 42.3601,\n  \"lng\": -71.0589\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/users/telemetry",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "users", "telemetry"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Portal Operations",
+      "item": [
+        {
+          "name": "Register Admin Account",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"System Admin\",\n  \"email\": \"admin@ucab.com\",\n  \"password\": \"adminpass123\",\n  \"mobile\": \"+15550000000\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "admin", "register"]
+            }
+          }
+        },
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@ucab.com\",\n  \"password\": \"adminpass123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "admin", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Dashboard Telemetry Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/admin/dashboard-stats",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "admin", "dashboard-stats"]
+            }
+          }
+        },
+        {
+          "name": "Verify Driver Account",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Verified\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/admin/drivers/{{driver_id}}/verify",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "admin", "drivers", "{{driver_id}}", "verify"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cab Fleet Operations",
+      "item": [
+        {
+          "name": "Get All Available Cabs (Nearby Search)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/cars?status=Available&city=New York",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "cars"],
+              "query": [
+                { "key": "status", "value": "Available" },
+                { "key": "city", "value": "New York" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Register New Cab (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Chevrolet Suburban XL", "type": "text" },
+                { "key": "type", "value": "SUV", "type": "text" },
+                { "key": "number", "value": "NY-SUV-882", "type": "text" },
+                { "key": "seats", "value": "6", "type": "text" },
+                { "key": "pricePerKm", "value": "22", "type": "text" },
+                { "key": "city", "value": "New York", "type": "text" },
+                { "key": "image", "type": "file", "src": [] }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/cars",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "cars"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ride Booking Operations",
+      "item": [
+        {
+          "name": "Estimate Fare Details",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"distance\": 25,\n  \"carType\": \"Sedan\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/bookings/estimate",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "bookings", "estimate"]
+            }
+          }
+        },
+        {
+          "name": "Create Ride Booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"carId\": \"{{car_id}}\",\n  \"pickup\": \"Grand Central Terminal, NY\",\n  \"drop\": \"JFK Airport, Terminal 4, NY\",\n  \"date\": \"2026-07-10\",\n  \"time\": \"14:30\",\n  \"distance\": 28\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/bookings",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "bookings"]
+            }
+          }
+        },
+        {
+          "name": "Simulated Checkout Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentMethod\": \"Card\",\n  \"cardDetails\": {\n    \"cardNumber\": \"4111222233334444\",\n    \"expiry\": \"12/28\",\n    \"cvv\": \"452\"\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/bookings/{{booking_id}}/pay",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "bookings", "{{booking_id}}", "pay"]
+            }
+          }
+        },
+        {
+          "name": "Fetch Ride Receipt",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/bookings/{{booking_id}}/receipt",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "bookings", "{{booking_id}}", "receipt"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Support Ticket Helpdesk",
+      "item": [
+        {
+          "name": "Open Help Ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"Lost Item in Vehicle\",\n  \"message\": \"I left my black leather wallet in the Toyota Prius plate CAB-TX-9876 this afternoon.\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/support",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "support"]
+            }
+          }
+        },
+        {
+          "name": "Reply to Ticket (Admin / User)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{admin_jwt_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"We have contacted driver Dave. He has located the wallet and will drop it at the nearest hub.\",\n  \"status\": \"Resolved\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/support/{{ticket_id}}/reply",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["api", "support", "{{ticket_id}}", "reply"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
