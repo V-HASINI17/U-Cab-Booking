@@ -1,4 +1,5 @@
 const User = require('../models/UserSchema');
+const Admin = require('../models/AdminSchema');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -111,9 +112,12 @@ exports.loginUser = async (req, res, next) => {
 // Get personal user profile
 exports.getUserProfile = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id).select('-password');
-    if (user) {
-      res.json({ success: true, data: user });
+    const profile = req.user?.role === 'admin'
+      ? await Admin.findById(req.user._id).select('-password')
+      : await User.findById(req.user._id).select('-password');
+
+    if (profile) {
+      res.json({ success: true, data: profile });
     } else {
       res.status(404);
       throw new Error('User profile not found');
